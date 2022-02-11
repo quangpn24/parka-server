@@ -2,10 +2,10 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 module.exports = {
     development: {
-        username: 'ncueriazkjkpja',
-        password: 'd75af4515a1ebd8873e2095bcbeaf954023a3b10e477182760e9c06c7aa47e09',
-        database: 'db0tdmfmmirl7t',
-        host: 'ec2-44-198-204-136.compute-1.amazonaws.com',
+        username: 'jxaseoztgycmpw',
+        password: '2715a892fb7ebe9475613ebfd6ca481b098af3e9a9d3b1ba2f7fc2d81a4caafd',
+        database: 'd40aqt5h4f3c7b',
+        host: 'ec2-52-5-1-20.compute-1.amazonaws.com',
         dialect: 'postgres',
         port: process.env.PG_PORT,
         operatorsAliases: 0,

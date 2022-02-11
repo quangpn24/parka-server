@@ -1,14 +1,12 @@
-const { UserService } = require('../services');
-const getAll = async (req, res) => {
+const {User} = require('../models');
 
-    try {
-        const users = await UserService.getAll;
-        res.status(200).json({
-            users: users,
-        });
-    } catch (error) {
-        res.status(400);
-    }
+const getAllUser = async(req, res)=> {
+   try {
+        const users = User.findAll();
+        res.status(200).json(users);
+   } catch (error) {
+        res.status(500).json(error);
+   }
 }
 
-module.exports = { getAll }
+module.exports = {getAllUser};
