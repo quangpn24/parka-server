@@ -1,4 +1,22 @@
 const { User } = require("../models");
+const { hashPassword } = require("../utils/hashPassword");
+
+const checkDuplicateEmail = async (req, res) => {
+	try {
+		const userFindByEmail = await User.findOne({
+			where: {
+				email: req.body.email,
+			},
+		});
+		if (userFindByEmail) {
+			res.status(400).send(true);
+		} else {
+			res.status(200).send(false);
+		}
+	} catch (error) {
+		res.status(500).send(error);
+	}
+};
 
 const create = async (req, res) => {
 	try {
@@ -12,7 +30,7 @@ const create = async (req, res) => {
 
 		// Create a User
 		const user = {
-			password: req.body.password,
+			password: hashPassword(req.body.password),
 			displayname: req.body.displayname,
 			phoneNumber: req.body.phoneNumber,
 			email: req.body.email,
@@ -36,4 +54,4 @@ const getAllUser = async (req, res) => {
 	}
 };
 
-module.exports = { getAllUser, create };
+module.exports = { getAllUser, create, checkDuplicateEmail };
