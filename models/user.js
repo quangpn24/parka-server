@@ -11,7 +11,6 @@ module.exports = (sequelize, Sequelize) => {
 			displayname: {
 				type: Sequelize.STRING,
 				field: "displayname",
-				unique: true,
 			},
 			password: {
 				type: Sequelize.STRING,
@@ -27,6 +26,10 @@ module.exports = (sequelize, Sequelize) => {
 			phoneNumber: {
 				type: Sequelize.STRING,
 				field: "phonenumber",
+			},
+			idRole: {
+				type: Sequelize.UUID,
+				field: "idrole",
 			},
 			isActivated: {
 				type: Sequelize.BOOLEAN,

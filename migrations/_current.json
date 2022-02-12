@@ -75,7 +75,6 @@
                 },
                 "displayname": {
                     "field": "displayname",
-                    "unique": true,
                     "seqType": "Sequelize.STRING"
                 },
                 "password": {
@@ -90,23 +89,23 @@
                     "field": "phonenumber",
                     "seqType": "Sequelize.STRING"
                 },
+                "idRole": {
+                    "field": "idrole",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Role",
+                        "key": "idrole"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
                 "isActivated": {
                     "field": "isactivated",
                     "defaultValue": {
                         "value": true
                     },
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "idRole": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Role",
-                        "key": "idrole"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "idRole",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -115,5 +114,5 @@
     "path": "D:\\ParkaServer\\migrations\\_current.json",
     "backupPath": "D:\\ParkaServer\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 3
+    "revision": 6
 }
