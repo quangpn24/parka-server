@@ -13,11 +13,6 @@ module.exports = (sequelize, Sequelize) => {
 				field: "displayname",
 				unique: true,
 			},
-			username: {
-				type: Sequelize.STRING,
-				field: "username",
-				unique: true,
-			},
 			password: {
 				type: Sequelize.STRING,
 				field: "password",
