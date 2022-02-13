@@ -1,39 +1,43 @@
 module.exports = (sequelize, Sequelize) => {
 	const User = sequelize.define(
-		"User",
+		'User',
 		{
 			idUser: {
 				type: Sequelize.UUID,
 				defaultValue: Sequelize.UUIDV4,
 				primaryKey: true,
-				field: "iduser",
+				field: 'iduser',
 			},
-			displayname: {
+			idSocial: {
 				type: Sequelize.STRING,
-				field: "displayname",
+				field: 'idsocial',
+			},
+			displayName: {
+				type: Sequelize.STRING,
+				field: 'displayname',
 			},
 			password: {
 				type: Sequelize.STRING,
-				field: "password",
+				field: 'password',
 			},
 			email: {
 				type: Sequelize.STRING,
-				field: "email",
+				field: 'email',
 				validate: {
 					isEmail: true,
 				},
 			},
 			phoneNumber: {
 				type: Sequelize.STRING,
-				field: "phonenumber",
+				field: 'phonenumber',
 			},
 			idRole: {
 				type: Sequelize.UUID,
-				field: "idrole",
+				field: 'idrole',
 			},
 			isActivated: {
 				type: Sequelize.BOOLEAN,
-				field: "isactivated",
+				field: 'isactivated',
 				defaultValue: true,
 			},
 		},
@@ -49,10 +53,10 @@ module.exports = (sequelize, Sequelize) => {
 	);
 	User.associate = (models) => {
 		User.hasOne(models.RefreshToken, {
-			foreignKey: "idUser",
+			foreignKey: 'idUser',
 		});
 		User.belongsTo(models.Role, {
-			foreignKey: "idRole",
+			foreignKey: 'idRole',
 		});
 	};
 	return User;
