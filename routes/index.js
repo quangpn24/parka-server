@@ -4,7 +4,7 @@ const userRouter = require("./user.routes");
 
 const apiRoute = express();
 
-apiRoute.use("/auth", authRouter);
+apiRoute.use("/auths", authRouter);
 apiRoute.use("/users", userRouter);
 
 module.exports = apiRoute;
