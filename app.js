@@ -3,14 +3,27 @@ const cors = require("cors");
 const db = require("./models");
 const routes = require("./routes");
 const dotenv = require("dotenv");
+const helmet = require("helmet");
+const morgan = require("morgan");
+
 dotenv.config();
 
 const app = express();
 
+// Helmet helps you secure your Express apps by setting various HTTP headers
+app.use(helmet());
+
+// Enable all CORS requests
 app.use(cors());
+
+// parses incoming requests with JSON payloads
 app.use(express.json());
 
+// parses incoming requests with urlencoded payloads
 app.use(express.urlencoded({ extended: true }));
+
+// HTTP request logger middleware
+app.use(morgan("tiny"));
 
 db.sequelize.sync();
 

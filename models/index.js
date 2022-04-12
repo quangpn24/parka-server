@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const Sequelize = require("sequelize");
+
 const sequelize = new Sequelize(
   dbConfig.development.database,
   dbConfig.development.username,
@@ -17,6 +18,7 @@ const sequelize = new Sequelize(
         rejectUnauthorized: false,
       },
     },
+    logging: false, // disable logging
   }
 );
 
@@ -40,5 +42,4 @@ Object.keys(db).forEach((modelName) => {
 });
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.ROLES = ["admin", "owner", "employee", "customer"];
 module.exports = db;
