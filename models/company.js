@@ -1,24 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define(
-    "User",
+  const Company = sequelize.define(
+    "Company",
     {
-      idUser: {
+      idCompany: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        field: "iduser",
+        field: "idcompany",
       },
-      idSocial: {
+      companyName: {
         type: Sequelize.STRING,
-        field: "idsocial",
+        field: "companyName",
       },
-      displayName: {
+      phoneNumber: {
         type: Sequelize.STRING,
-        field: "displayname",
-      },
-      password: {
-        type: Sequelize.STRING,
-        field: "password",
+        field: "phonenumber",
       },
       email: {
         type: Sequelize.STRING,
@@ -27,9 +23,9 @@ module.exports = (sequelize, Sequelize) => {
           isEmail: true,
         },
       },
-      phoneNumber: {
+      password: {
         type: Sequelize.STRING,
-        field: "phonenumber",
+        field: "password",
       },
       isActivated: {
         type: Sequelize.BOOLEAN,
@@ -47,10 +43,10 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  User.associate = (models) => {
-    User.hasOne(models.RefreshToken, {
-      foreignKey: "idUser",
+  Company.associate = (models) => {
+    Company.hasMany(models.ParkingLot, {
+      foreignKey: "idParkingLot",
     });
   };
-  return User;
+  return Company;
 };

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon app",
+    "start": "node app",
+    "dev": "nodemon app",
     "sync": "npx sequelize-mig migration:sync",
     "prepare": "husky install"
   },
@@ -21,7 +22,9 @@
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.13.0"
