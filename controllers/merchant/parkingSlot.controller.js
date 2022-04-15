@@ -1,4 +1,4 @@
-const { Block } = require("../models");
+const { ParkingSlot } = require("../../models");
 
 const create = async (req, res) => {
   try {
@@ -11,18 +11,17 @@ const create = async (req, res) => {
       return;
     }
 
-    // Create a Block
-    const Block = {
-      blockCode: req.body.blockCode,
-      description: req.body.description,
-      idParkingLot: req.body.idParkingLot,
+    // Create a ParkingSlot
+    const parkingSlot = {
+      slotNumber: req.body.slotNumber,
+      idBlock: req.body.idBlock,
     };
 
     // Save
-    const newBlock = await User.create(Block);
+    const newParkingSlot = await ParkingSlot.create(parkingSlot);
     res.status(200).send({
       message: "Successfully",
-      data: newBlock,
+      data: newParkingSlot,
     });
   } catch (error) {
     res.status(400).send({
@@ -35,10 +34,10 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const Blocks = await Block.findAll();
+    const parkingSlots = await ParkingSlot.findAll();
     res.status(200).send({
       message: "Successfully",
-      data: Blocks,
+      data: parkingSlots,
     });
   } catch (error) {
     res.status(400).send({
@@ -51,11 +50,11 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { idBlock } = req.params;
-    const Block = await Block.findByPk(idBlock);
+    const { idParkingSlot } = req.params;
+    const parkingSlot = await ParkingSlot.findByPk(idParkingSlot);
     res.status(200).send({
       message: "Successfully",
-      data: Block,
+      data: parkingSlot,
     });
   } catch (error) {
     res.status(400).send({

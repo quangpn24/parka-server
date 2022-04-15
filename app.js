@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./models");
-const routes = require("./routes");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const merchantRouter = require("./routes/merchant");
+const userRouter = require("./routes/user/user.routes");
+const apiRouter = require("./routes");
 
 dotenv.config();
 
@@ -33,7 +35,9 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-app.use("/api", routes);
+app.use("/api/merchant", merchantRouter);
+app.use("/api/user", userRouter);
+app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
   res.json({

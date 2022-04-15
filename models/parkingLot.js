@@ -32,6 +32,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: "idcompany",
       },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: "isdeleted",
+        defaultValue: false,
+      },
     },
     {
       freezeTableName: true,
@@ -41,9 +46,9 @@ module.exports = (sequelize, Sequelize) => {
       createdAt: false,
 
       updatedAt: false,
-    }
+    },
   );
-  ParkingLot.associate = (models) => {
+  ParkingLot.associate = models => {
     ParkingLot.hasMany(models.Block, {
       foreignKey: "idParkingLot",
     });

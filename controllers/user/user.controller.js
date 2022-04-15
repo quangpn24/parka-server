@@ -1,5 +1,5 @@
-const { User } = require("../models");
-const { hashPassword } = require("../utils/hashPassword");
+const { User } = require("../../models");
+const { hashPassword } = require("../../utils/hashPassword");
 
 const checkDuplicateEmail = async (req, res) => {
   try {

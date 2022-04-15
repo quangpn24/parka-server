@@ -24,7 +24,7 @@
           "seqType": "Sequelize.UUID"
         },
         "blockCode": {
-          "field": "blockCode",
+          "field": "blockcode",
           "seqType": "Sequelize.STRING"
         },
         "description": {
@@ -54,7 +54,7 @@
           "seqType": "Sequelize.UUID"
         },
         "companyName": {
-          "field": "companyName",
+          "field": "companyname",
           "seqType": "Sequelize.STRING"
         },
         "phoneNumber": {
@@ -89,13 +89,6 @@
           },
           "primaryKey": true,
           "field": "idparkinglot",
-          "allowNull": true,
-          "references": {
-            "model": "Company",
-            "key": "idcompany"
-          },
-          "onDelete": "CASCADE",
-          "onUpdate": "CASCADE",
           "seqType": "Sequelize.UUID"
         },
         "name": {
@@ -110,6 +103,14 @@
           "field": "address",
           "seqType": "Sequelize.STRING"
         },
+        "lat": {
+          "field": "lat",
+          "seqType": "Sequelize.STRING"
+        },
+        "long": {
+          "field": "long",
+          "seqType": "Sequelize.STRING"
+        },
         "idCompany": {
           "field": "idcompany",
           "allowNull": true,
@@ -117,9 +118,13 @@
             "model": "Company",
             "key": "idcompany"
           },
-          "onDelete": "NO ACTION",
+          "onDelete": "CASCADE",
           "onUpdate": "CASCADE",
           "seqType": "Sequelize.UUID"
+        },
+        "isDeleted": {
+          "field": "isdeleted",
+          "seqType": "Sequelize.BOOLEAN"
         }
       },
       "indexes": []
@@ -209,7 +214,7 @@
             "value": "Sequelize.UUIDV4"
           },
           "primaryKey": true,
-          "field": "idTimeFrame",
+          "field": "idtimeframe",
           "seqType": "Sequelize.UUID"
         },
         "idParkingLot": {
@@ -273,5 +278,5 @@
   "path": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current.json",
   "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current_bak.json",
   "exists": true,
-  "revision": 4
+  "revision": 2
 }

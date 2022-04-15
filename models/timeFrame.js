@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        field: "idTimeFrame",
+        field: "idtimeframe",
       },
       idParkingLot: {
         type: Sequelize.UUID,
@@ -29,9 +29,9 @@ module.exports = (sequelize, Sequelize) => {
       createdAt: false,
 
       updatedAt: false,
-    }
+    },
   );
-  TimeFrame.associate = (models) => {
+  TimeFrame.associate = models => {
     // TimeFrame.hasOne(models.RefreshToken, {
     // 	foreignKey: 'idTimeFrame',
     // });
