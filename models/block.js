@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       blockCode: {
         type: Sequelize.STRING,
-        field: "blockCode",
+        field: "blockcode",
       },
       description: {
         type: Sequelize.STRING,
@@ -34,9 +34,9 @@ module.exports = (sequelize, Sequelize) => {
       createdAt: false,
 
       updatedAt: false,
-    }
+    },
   );
-  Block.associate = (models) => {
+  Block.associate = models => {
     Block.belongsTo(models.ParkingLot, {
       foreignKey: "idParkingLot",
     });

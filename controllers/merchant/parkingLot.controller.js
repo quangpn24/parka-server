@@ -1,4 +1,4 @@
-const { ParkingLot } = require("../models");
+const { ParkingLot } = require("../../models");
 
 const create = async (req, res) => {
   try {
@@ -16,11 +16,13 @@ const create = async (req, res) => {
       name: req.body.name,
       description: req.body.description,
       address: req.body.address,
+      lat: req.body.lat,
+      long: req.body.long,
       idCompany: req.body.idCompany,
     };
 
     // Save
-    const newParkingLot = await User.create(parkingLot);
+    const newParkingLot = await ParkingLot.create(parkingLot);
     res.status(200).send({
       message: "Successfully",
       data: newParkingLot,
@@ -67,4 +69,29 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { create, getAll, getById };
+const deleteOne = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await ParkingLot.update(
+      { isDeleted: true },
+      {
+        where: {
+          idParkingLot: id,
+        },
+        returning: true,
+      },
+    );
+    res.status(200).send({
+      message: "Successfully",
+      data: deleted[1],
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+module.exports = { create, getAll, getById, deleteOne };

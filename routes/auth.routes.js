@@ -1,10 +1,10 @@
-const { AuthController } = require("../controllers");
+const { authController } = require("../controllers");
 const authRouter = require("express").Router();
 
-authRouter.post("/register", AuthController.register);
-authRouter.post("/login", AuthController.login);
-authRouter.post("/loginoauth", AuthController.loginWithOAuth);
-authRouter.post("/signin", AuthController.login);
-authRouter.post("/refreshtoken", AuthController.refreshToken);
+authRouter.post("/register", authController.register);
+authRouter.post("/login", authController.login);
+authRouter.post("/loginoauth", authController.loginWithOAuth);
+authRouter.post("/signin", authController.login);
+authRouter.post("/refreshtoken", authController.refreshToken);
 
 module.exports = authRouter;

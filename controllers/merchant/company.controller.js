@@ -1,4 +1,5 @@
-const { ParkingSlot } = require("../models");
+const { Company } = require("../../models");
+var bcrypt = require("bcryptjs");
 
 const create = async (req, res) => {
   try {
@@ -11,22 +12,25 @@ const create = async (req, res) => {
       return;
     }
 
-    // Create a ParkingSlot
-    const ParkingSlot = {
-      slotNumber: req.body.slotNumber,
-      idBlock: req.body.idBlock,
+    // Create a Company
+    const company = {
+      companyName: req.body.companyName,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password),
     };
 
     // Save
-    const newParkingSlot = await User.create(ParkingSlot);
+    const newCompany = await Company.create(company);
+    newCompany.password = undefined;
     res.status(200).send({
       message: "Successfully",
-      data: newParkingSlot,
+      data: newCompany,
     });
   } catch (error) {
     res.status(400).send({
       message: error,
-      data: "",
+      data: {},
     });
     return;
   }
@@ -34,10 +38,10 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const parkingSlots = await ParkingSlot.findAll();
+    const companys = await Company.findAll();
     res.status(200).send({
       message: "Successfully",
-      data: parkingSlots,
+      data: companys,
     });
   } catch (error) {
     res.status(400).send({
@@ -50,11 +54,11 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { idParkingSlot } = req.params;
-    const parkingSlot = await ParkingSlot.findByPk(idParkingSlot);
+    const { idCompany } = req.params;
+    const company = await Company.findByPk(idCompany);
     res.status(200).send({
       message: "Successfully",
-      data: parkingSlot,
+      data: company,
     });
   } catch (error) {
     res.status(400).send({

@@ -1,13 +1,13 @@
 const jwt = require("jsonwebtoken");
 const { TokenExpiredError } = jwt;
+
 const catchError = (err, res) => {
   if (err instanceof TokenExpiredError) {
-    return res
-      .status(401)
-      .send({ message: "Unauthorized! Access Token was expired!" });
+    return res.status(401).send({ message: "Unauthorized! Access Token was expired!" });
   }
   return res.sendStatus(401).send({ message: "Unauthorized!" });
 };
+
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (token) {
@@ -22,4 +22,5 @@ const verifyToken = (req, res, next) => {
     res.status(401).json(`You're not authentication`);
   }
 };
+
 module.exports = verifyToken;

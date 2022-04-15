@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       companyName: {
         type: Sequelize.STRING,
-        field: "companyName",
+        field: "companyname",
       },
       phoneNumber: {
         type: Sequelize.STRING,
@@ -41,11 +41,11 @@ module.exports = (sequelize, Sequelize) => {
       createdAt: false,
 
       updatedAt: false,
-    }
+    },
   );
-  Company.associate = (models) => {
+  Company.associate = models => {
     Company.hasMany(models.ParkingLot, {
-      foreignKey: "idParkingLot",
+      foreignKey: "idCompany",
     });
   };
   return Company;
