@@ -76,4 +76,5 @@ const login = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
-module.exports = { signUp };
+
+module.exports = { signUp, login };

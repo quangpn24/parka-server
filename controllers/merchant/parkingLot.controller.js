@@ -54,11 +54,33 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { idParkingLot } = req.params;
-    const parkingLot = await ParkingLot.findByPk(idParkingLot);
+    const { id } = req.params;
+    const parkingLot = await ParkingLot.findByPk(id);
     res.status(200).send({
       message: "Successfully",
       data: parkingLot,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = ParkingLot.update(req.body, {
+      where: {
+        idParkingLot: id,
+      },
+      returning: false,
+    });
+    res.status(200).send({
+      message: "Successfully",
+      data: updatedData,
     });
   } catch (error) {
     res.status(400).send({
@@ -94,4 +116,4 @@ const deleteOne = async (req, res) => {
     return;
   }
 };
-module.exports = { create, getAll, getById, deleteOne };
+module.exports = { create, getAll, getById, update, deleteOne };
