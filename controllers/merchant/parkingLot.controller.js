@@ -38,7 +38,8 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const parkingLot = await ParkingLot.findAll();
+    const { id } = req.params;
+    const parkingLot = await ParkingLot.findAll({ idCompany: id });
     res.status(200).send({
       message: "Successfully",
       data: parkingLot,
@@ -106,7 +107,7 @@ const deleteOne = async (req, res) => {
     );
     res.status(200).send({
       message: "Successfully",
-      data: deleted[1],
+      data: deleted[1][0],
     });
   } catch (error) {
     res.status(400).send({

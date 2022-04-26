@@ -60,13 +60,13 @@ const login = async (req, res) => {
 
     const accessToken = jwt.sign(
       {
-        idCompany: newCompany.idCompany,
+        idCompany: company.idCompany,
       },
       process.env.JWT_ACCESS_KEY,
       { expiresIn: authConfig.jwtExpiration },
     );
-
     company.password = undefined;
+
     res.status(200).json({
       message: "Successfully",
       data: company,
