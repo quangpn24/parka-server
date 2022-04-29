@@ -39,7 +39,7 @@ const create = async (req, res) => {
 const getAll = async (req, res) => {
   try {
     const { id } = req.params;
-    const parkingLot = await ParkingLot.findAll({ idCompany: id });
+    const parkingLot = await ParkingLot.findAll({ where: { idCompany: id } });
     res.status(200).send({
       message: "Successfully",
       data: parkingLot,
@@ -73,15 +73,16 @@ const getById = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedData = ParkingLot.update(req.body, {
+    const updatedData = await ParkingLot.update(req.body, {
       where: {
         idParkingLot: id,
       },
-      returning: false,
+      returning: true,
     });
+
     res.status(200).send({
       message: "Successfully",
-      data: updatedData,
+      data: updatedData[1][0],
     });
   } catch (error) {
     res.status(400).send({

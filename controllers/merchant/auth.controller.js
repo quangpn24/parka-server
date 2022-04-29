@@ -77,4 +77,29 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signUp, login };
+const verify = async (req, res) => {
+  try {
+    const { accessToken } = req.body;
+    let idCompany;
+    jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, function (err, decoded) {
+      idCompany = decoded.idCompany;
+      if (err) {
+        throw err;
+      }
+    });
+
+    const company = await Company.findOne({
+      where: {
+        idCompany: idCompany,
+      },
+    });
+
+    res.status(200).json({
+      message: "Successfully",
+      data: company,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+module.exports = { signUp, login, verify };
