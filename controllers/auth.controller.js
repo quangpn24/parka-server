@@ -42,7 +42,7 @@ const login = async (req, res) => {
         id: user.idUser,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: config.jwtExpiration }
+      { expiresIn: config.jwtExpiration },
     );
     const { password, ...others } = user.dataValues;
     let refreshToken = await RefreshToken.createToken(user.dataValues);
@@ -77,7 +77,7 @@ const loginWithOAuth = async (req, res) => {
         id: user.idUser,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: config.jwtExpiration }
+      { expiresIn: config.jwtExpiration },
     );
 
     res.status(200).json({ user, accessToken });

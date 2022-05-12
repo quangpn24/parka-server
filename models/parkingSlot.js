@@ -29,9 +29,9 @@ module.exports = (sequelize, Sequelize) => {
       createdAt: false,
 
       updatedAt: false,
-    }
+    },
   );
-  ParkingSlot.associate = (models) => {
+  ParkingSlot.associate = models => {
     ParkingSlot.belongsTo(models.Block, {
       foreignKey: "idBlock",
     });
