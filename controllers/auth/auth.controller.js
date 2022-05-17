@@ -1,22 +1,40 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User, RefreshToken } = require("../models");
-const authConfig = require("../configs/auth.config");
-const config = require("../configs/auth.config");
+const { User, RefreshToken } = require("../../models");
+const authConfig = require("../../configs/auth.config");
+const config = require("../../configs/auth.config");
+const { hashPassword } = require("../../utils/hashPassword");
 
 const register = async (req, res) => {
   try {
     const newUser = {
-      username: req.body.username,
       password: hashPassword(req.body.password),
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
+      displayName: req.body.displayName,
     };
 
     const user = await User.create(newUser);
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    res.json({ message: "Error: " + err.message });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const newPassword = hashPassword(req.body.newPassword);
+    const phoneNumber = req.body.phoneNumber;
+    console.log(phoneNumber);
+    const num = await User.update(
+      { password: newPassword },
+      { where: { phoneNumber: phoneNumber } },
+    );
+    console.log(num);
+    if (num == 1) res.send({ status: true });
+    else res.send({ status: false });
+  } catch (err) {
+    res.json({ message: "Error: " + err.message });
   }
 };
 
@@ -24,14 +42,12 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        email: req.body.email,
+        phoneNumber: req.body.username,
       },
     });
-
     if (!user) {
-      res.status(404).json("User not found");
+      res.send({ message: "User not found" });
     }
-
     const validPassword = bcrypt.compareSync(req.body.password, user.password);
     if (!validPassword) {
       res.send({ message: "Invalid password" });
@@ -42,13 +58,13 @@ const login = async (req, res) => {
         id: user.idUser,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: config.jwtExpiration }
+      { expiresIn: config.jwtExpiration },
     );
     const { password, ...others } = user.dataValues;
     let refreshToken = await RefreshToken.createToken(user.dataValues);
-    res.status(200).json({ ...others, accessToken, refreshToken });
+    res.status(200).json({ data: { ...others }, accessToken, refreshToken });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).send({ error });
   }
 };
 
@@ -77,7 +93,7 @@ const loginWithOAuth = async (req, res) => {
         id: user.idUser,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: config.jwtExpiration }
+      { expiresIn: config.jwtExpiration },
     );
 
     res.status(200).json({ user, accessToken });
@@ -125,4 +141,4 @@ const refreshToken = async (req, res) => {
   }
 };
 
-module.exports = { register, login, refreshToken, loginWithOAuth };
+module.exports = { register, login, refreshToken, loginWithOAuth, resetPassword };

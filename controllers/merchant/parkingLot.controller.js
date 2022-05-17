@@ -1,4 +1,4 @@
-const { ParkingLot } = require("../../models");
+const { ParkingLot, TimeFrame } = require("../../models");
 
 const create = async (req, res) => {
   try {
@@ -94,4 +94,50 @@ const deleteOne = async (req, res) => {
     return;
   }
 };
-module.exports = { create, getAll, getById, deleteOne };
+
+// const addTimeFrame = async (req, res) => {
+//   try {
+//     const timeframe = {
+//       idParkingLot: "376dc8c1-6673-4c31-a631-2988b81fd0ce",
+//       duration: 1440,
+//       cost: 700000,
+//     };
+//     const result = await TimeFrame.create(timeframe);
+
+//     res.status(200).send({
+//       message: "Successfully",
+//       data: result,
+//     });
+//   } catch (error) {
+//     res.status(400).send({
+//       message: error,
+//       data: "1",
+//     });
+//     return;
+//   }
+// };
+
+const getTimeFrameByIdLot = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await TimeFrame.findAll({
+      where: {
+        idParkingLot: id,
+      },
+      order: [["duration", "ASC"]],
+    });
+
+    res.status(200).send({
+      message: "Successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+module.exports = { create, getAll, getById, deleteOne, getTimeFrameByIdLot };
