@@ -25,12 +25,10 @@ const resetPassword = async (req, res) => {
   try {
     const newPassword = hashPassword(req.body.newPassword);
     const phoneNumber = req.body.phoneNumber;
-    console.log(phoneNumber);
     const num = await User.update(
       { password: newPassword },
       { where: { phoneNumber: phoneNumber } },
     );
-    console.log(num);
     if (num == 1) res.send({ status: true });
     else res.send({ status: false });
   } catch (err) {
@@ -46,13 +44,12 @@ const login = async (req, res) => {
       },
     });
     if (!user) {
-      res.send({ message: "User not found" });
+      return res.send({ message: "User not found" });
     }
     const validPassword = bcrypt.compareSync(req.body.password, user.password);
     if (!validPassword) {
-      res.send({ message: "Invalid password" });
+      return res.send({ message: "Invalid password" });
     }
-
     const accessToken = jwt.sign(
       {
         id: user.idUser,

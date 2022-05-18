@@ -5,7 +5,7 @@ const userRouter = require("./user/user.routes");
 
 const apiRouter = express();
 
-apiRouter.use("/auths", authRouter);
+apiRouter.use("/auth", authRouter);
 apiRouter.use("/customer", customerRouter);
 apiRouter.use("/users", userRouter);
 
