@@ -25,10 +25,10 @@ module.exports = (sequelize, Sequelize) => {
 
     return refreshToken.token;
   };
-  RefreshToken.verifyExpiration = (token) => {
+  RefreshToken.verifyExpiration = token => {
     return token.expiryDate.getTime() < new Date().getTime();
   };
-  RefreshToken.associate = (models) => {
+  RefreshToken.associate = models => {
     RefreshToken.belongsTo(models.User, {
       foreignKey: "idUser",
     });
