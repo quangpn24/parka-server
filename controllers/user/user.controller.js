@@ -1,17 +1,18 @@
 const { User } = require("../../models");
 const { hashPassword } = require("../../utils/hashPassword");
 
-const checkDuplicateEmail = async (req, res) => {
+const checkDuplicatePhoneNumber = async (req, res) => {
   try {
-    const userFindByEmail = await User.findOne({
+    console.log(req.body.phoneNumber);
+    const user = await User.findOne({
       where: {
-        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
       },
     });
-    if (userFindByEmail) {
-      res.status(400).send(true);
+    if (user) {
+      res.send(true);
     } else {
-      res.status(200).send(false);
+      res.send(false);
     }
   } catch (error) {
     res.status(500).send(error);
@@ -22,23 +23,24 @@ const create = async (req, res) => {
   try {
     // Validate request
     if (!req.body) {
-      res.status(400).send({
+      res.send({
         message: "Content can not be empty!",
       });
       return;
     }
+    console.log(req.body);
 
     // Create a User
     const user = {
       password: hashPassword(req.body.password),
-      displayname: req.body.name,
-      phoneNumber: req.body.phonenumber,
+      displayName: req.body.name,
+      phoneNumber: req.body.phoneNumber,
       email: req.body.email,
-      // idRole: req.body.idRole,
     };
+
     // Save User in the database
     const newUser = await User.create(user);
-    res.status(200).send(newUser);
+    return res.status(200).send({ data: newUser });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -64,4 +66,4 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { getAllUser, create, checkDuplicateEmail, getById };
+module.exports = { getAllUser, create, checkDuplicatePhoneNumber, getById };

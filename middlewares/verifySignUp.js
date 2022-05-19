@@ -1,6 +1,6 @@
 const { User, Role } = require("../models");
 
-const checkDuplicateUsernameOrEmail = async (req, res, next) => {
+const checkDuplicatePhoneNumber = async (req, res, next) => {
   // //username
   // const userFindByUsername = await User.findOne({
   // 	where: {
@@ -13,17 +13,17 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   // }
   //Email
 
-  const userFindByEmail = await User.findOne({
+  const userFindByPhone = await User.findOne({
     where: {
-      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
     },
   });
 
-  if (userFindByEmail) {
+  if (userFindByPhone) {
     res.status(400).json("Failed! Email is already in use!");
     return;
   }
   next();
 };
 
-module.exports = { checkDuplicateUsernameOrEmail };
+module.exports = { checkDuplicatePhoneNumber };

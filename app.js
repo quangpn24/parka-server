@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const merchantRouter = require("./routes/merchant");
 const userRouter = require("./routes/user/user.routes");
 const apiRouter = require("./routes");
+const customerRouter = require("./routes/customer/parkingLot.routes");
 
 dotenv.config();
 
