@@ -38,7 +38,8 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const parkingLot = await ParkingLot.findAll();
+    const { id } = req.params;
+    const parkingLot = await ParkingLot.findAll({ where: { idCompany: id } });
     res.status(200).send({
       message: "Successfully",
       data: parkingLot,
@@ -54,11 +55,34 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { idParkingLot } = req.params;
-    const parkingLot = await ParkingLot.findByPk(idParkingLot);
+    const { id } = req.params;
+    const parkingLot = await ParkingLot.findByPk(id);
     res.status(200).send({
       message: "Successfully",
       data: parkingLot,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = await ParkingLot.update(req.body, {
+      where: {
+        idParkingLot: id,
+      },
+      returning: true,
+    });
+
+    res.status(200).send({
+      message: "Successfully",
+      data: updatedData[1][0],
     });
   } catch (error) {
     res.status(400).send({
@@ -84,7 +108,7 @@ const deleteOne = async (req, res) => {
     );
     res.status(200).send({
       message: "Successfully",
-      data: deleted[1],
+      data: deleted[1][0],
     });
   } catch (error) {
     res.status(400).send({
@@ -140,4 +164,4 @@ const getTimeFrameByIdLot = async (req, res) => {
     return;
   }
 };
-module.exports = { create, getAll, getById, deleteOne, getTimeFrameByIdLot };
+module.exports = { create, update, getAll, getById, deleteOne, getTimeFrameByIdLot };

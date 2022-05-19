@@ -60,13 +60,13 @@ const login = async (req, res) => {
 
     const accessToken = jwt.sign(
       {
-        idCompany: newCompany.idCompany,
+        idCompany: company.idCompany,
       },
       process.env.JWT_ACCESS_KEY,
       { expiresIn: authConfig.jwtExpiration },
     );
-
     company.password = undefined;
+
     res.status(200).json({
       message: "Successfully",
       data: company,
@@ -76,4 +76,30 @@ const login = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
-module.exports = { signUp };
+
+const verify = async (req, res) => {
+  try {
+    const { accessToken } = req.body;
+    let idCompany;
+    jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, function (err, decoded) {
+      idCompany = decoded.idCompany;
+      if (err) {
+        throw err;
+      }
+    });
+
+    const company = await Company.findOne({
+      where: {
+        idCompany: idCompany,
+      },
+    });
+
+    res.status(200).json({
+      message: "Successfully",
+      data: company,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+module.exports = { signUp, login, verify };
