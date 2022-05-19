@@ -28,14 +28,16 @@ const create = async (req, res) => {
       });
       return;
     }
+    console.log(req.body);
 
     // Create a User
     const user = {
       password: hashPassword(req.body.password),
-      displayname: req.body.name,
-      phoneNumber: req.body.phonenumber,
+      displayName: req.body.name,
+      phoneNumber: req.body.phoneNumber,
       email: req.body.email,
     };
+
     // Save User in the database
     const newUser = await User.create(user);
     return res.status(200).send({ data: newUser });
