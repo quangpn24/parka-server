@@ -124,6 +124,9 @@
         },
         "isDeleted": {
           "field": "isdeleted",
+          "defaultValue": {
+            "value": false
+          },
           "seqType": "Sequelize.BOOLEAN"
         }
       },
@@ -278,5 +281,5 @@
   "path": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current.json",
   "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current_bak.json",
   "exists": true,
-  "revision": 2
+  "revision": 3
 }

@@ -255,6 +255,10 @@
           "field": "displayname",
           "seqType": "Sequelize.STRING"
         },
+        "imageUrl": {
+          "field": "imageurl",
+          "seqType": "Sequelize.STRING"
+        },
         "password": {
           "field": "password",
           "seqType": "Sequelize.STRING"
@@ -278,8 +282,8 @@
       "indexes": []
     }
   },
-  "path": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current.json",
-  "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\ParkaServer\\migrations\\_current_bak.json",
+  "path": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current.json",
+  "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current_bak.json",
   "exists": true,
-  "revision": 3
+  "revision": 4
 }
