@@ -19,6 +19,8 @@ module.exports = (sequelize, Sequelize) => {
       imageUrl: {
         type: Sequelize.STRING,
         field: "imageurl",
+        defaultValue:
+          "https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=user",
       },
       password: {
         type: Sequelize.STRING,

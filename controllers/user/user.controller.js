@@ -21,8 +21,9 @@ const checkDuplicatePhoneNumber = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    const { body } = req.body;
     // Validate request
-    if (!req.body) {
+    if (!body) {
       res.send({
         message: "Content can not be empty!",
       });
@@ -31,11 +32,13 @@ const create = async (req, res) => {
 
     // Create a User
     const user = {
-      password: hashPassword(req.body.password),
-      displayName: req.body.name,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
-      imageUrl: `https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=${req.body.name}`,
+      password: hashPassword(body.password),
+      displayName: body.name,
+      phoneNumber: body.phoneNumber,
+      email: body.email,
+      imageUrl:
+        body.imageUrl ||
+        `https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=${body.name}`,
     };
 
     // Save User in the database
