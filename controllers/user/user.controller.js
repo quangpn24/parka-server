@@ -28,7 +28,6 @@ const create = async (req, res) => {
       });
       return;
     }
-    console.log(req.body);
 
     // Create a User
     const user = {
@@ -36,6 +35,7 @@ const create = async (req, res) => {
       displayName: req.body.name,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,
+      imageUrl: `https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=${req.body.name}`,
     };
 
     // Save User in the database
@@ -66,4 +66,25 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { getAllUser, create, checkDuplicatePhoneNumber, getById };
+const update = async (req, res) => {
+  try {
+    const { idUser } = req.params;
+    const updatedData = await User.update(req.body, {
+      where: {
+        idUser: idUser,
+      },
+      returning: true,
+    });
+
+    res.status(200).send({
+      message: "Successfully",
+      data: updatedData[1][0],
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+  }
+};
+module.exports = { getAllUser, create, checkDuplicatePhoneNumber, getById, update };

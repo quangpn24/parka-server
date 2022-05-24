@@ -16,6 +16,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: "displayname",
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+        field: "imageurl",
+      },
       password: {
         type: Sequelize.STRING,
         field: "password",
