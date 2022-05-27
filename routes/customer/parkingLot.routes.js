@@ -1,6 +1,7 @@
 const { parkingLotController } = require("../../controllers/customer");
-const customerRouter = require("express").Router();
+const parkingLotRouter = require("express").Router();
 
-customerRouter.post("/search", parkingLotController.searchAdress);
+parkingLotRouter.post("/search", parkingLotController.searchAdress);
+parkingLotRouter.get("/", parkingLotController.getAll);
 
-module.exports = customerRouter;
+module.exports = parkingLotRouter;

@@ -25,6 +25,11 @@ module.exports = (sequelize, Sequelize) => {
         field: "isfull",
         defaultValue: false,
       },
+      numOfSlot: {
+        type: Sequelize.INTEGER,
+        field: "numofslot",
+        defaultValue: false,
+      },
     },
     {
       freezeTableName: true,

@@ -1,6 +1,6 @@
 const express = require("express");
 const authRouter = require("./auth/auth.routes");
-const customerRouter = require("./customer/parkingLot.routes");
+const customerRouter = require("./customer");
 const userRouter = require("./user/user.routes");
 
 const apiRouter = express();

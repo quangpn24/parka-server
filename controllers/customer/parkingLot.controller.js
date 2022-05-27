@@ -9,7 +9,6 @@ const searchAdress = async (req, res) => {
     // console.log(searchText);
     const parkingLots = await ParkingLot.findAll({
       limit: 10,
-      attributes: ["idParkingLot", "name", "address", "lat", "long"],
       where: { name: { [Op.iLike]: "%" + searchText + "%" } },
     });
     if (!parkingLots) {
@@ -29,4 +28,21 @@ const searchAdress = async (req, res) => {
     });
   }
 };
-module.exports = { searchAdress };
+
+const getAll = async (req, res) => {
+  try {
+    const parkingLots = await ParkingLot.findAll();
+    res.status(200).send({
+      message: "Successfully",
+      data: parkingLots,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+
+module.exports = { searchAdress, getAll };
