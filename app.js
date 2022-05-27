@@ -4,10 +4,7 @@ const db = require("./models");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const merchantRouter = require("./routes/merchant");
-const userRouter = require("./routes/user/user.routes");
 const apiRouter = require("./routes");
-const customerRouter = require("./routes/customer/parkingLot.routes");
 
 dotenv.config();
 
@@ -36,8 +33,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-app.use("/api/merchant", merchantRouter);
-app.use("/api/user", userRouter);
 app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {

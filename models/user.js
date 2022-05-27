@@ -57,6 +57,12 @@ module.exports = (sequelize, Sequelize) => {
     User.hasOne(models.RefreshToken, {
       foreignKey: "idUser",
     });
+    User.hasMany(models.Vehicle, {
+      foreignKey: "idUser",
+    });
+    User.hasMany(models.ParkingReservation, {
+      foreignKey: "idUser",
+    });
   };
   return User;
 };

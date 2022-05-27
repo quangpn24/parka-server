@@ -35,6 +35,9 @@ module.exports = (sequelize, Sequelize) => {
     ParkingSlot.belongsTo(models.Block, {
       foreignKey: "idBlock",
     });
+    ParkingSlot.hasMany(models.ParkingReservation, {
+      foreignKey: "idParkingSlot",
+    });
   };
   return ParkingSlot;
 };

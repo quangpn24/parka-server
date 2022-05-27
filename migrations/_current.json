@@ -132,6 +132,116 @@
       },
       "indexes": []
     },
+    "ParkingReservation": {
+      "tableName": "ParkingReservation",
+      "schema": {
+        "idParkingReservation": {
+          "defaultValue": {
+            "internal": true,
+            "value": "Sequelize.UUIDV4"
+          },
+          "primaryKey": true,
+          "field": "idparkingreservation",
+          "seqType": "Sequelize.UUID"
+        },
+        "idVehicle": {
+          "field": "idvehicle",
+          "allowNull": true,
+          "references": {
+            "model": "Vehicle",
+            "key": "idvehicle"
+          },
+          "onDelete": "NO ACTION",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "idUser": {
+          "field": "iduser",
+          "allowNull": true,
+          "references": {
+            "model": "User",
+            "key": "iduser"
+          },
+          "onDelete": "NO ACTION",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "idParkingSlot": {
+          "field": "idparkingslot",
+          "allowNull": true,
+          "references": {
+            "model": "ParkingSlot",
+            "key": "idparkingslot"
+          },
+          "onDelete": "NO ACTION",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "startTime": {
+          "field": "starttime",
+          "seqType": "Sequelize.TIME"
+        },
+        "bookingDate": {
+          "field": "bookingdate",
+          "seqType": "Sequelize.DATE"
+        },
+        "duration": {
+          "field": "duration",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "ParkingSlip": {
+      "tableName": "ParkingSlip",
+      "schema": {
+        "idParkingSlip": {
+          "defaultValue": {
+            "internal": true,
+            "value": "Sequelize.UUIDV4"
+          },
+          "primaryKey": true,
+          "field": "idparkingslip",
+          "seqType": "Sequelize.UUID"
+        },
+        "idParkingReservation": {
+          "field": "idparkingreservation",
+          "allowNull": true,
+          "references": {
+            "model": "ParkingReservation",
+            "key": "idparkingreservation"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "idUser": {
+          "field": "iduser",
+          "seqType": "Sequelize.UUID"
+        },
+        "entryTime": {
+          "field": "entrytime",
+          "seqType": "Sequelize.TIME"
+        },
+        "exitTime": {
+          "field": "exittime",
+          "seqType": "Sequelize.TIME"
+        },
+        "cost": {
+          "field": "cost",
+          "seqType": "Sequelize.BIGINT"
+        },
+        "total": {
+          "field": "total",
+          "seqType": "Sequelize.BIGINT"
+        },
+        "isPaid": {
+          "field": "ispaid",
+          "seqType": "Sequelize.BOOLEAN"
+        }
+      },
+      "indexes": []
+    },
     "ParkingSlot": {
       "tableName": "ParkingSlot",
       "schema": {
@@ -257,6 +367,9 @@
         },
         "imageUrl": {
           "field": "imageurl",
+          "defaultValue": {
+            "value": "https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=user"
+          },
           "seqType": "Sequelize.STRING"
         },
         "password": {
@@ -280,10 +393,55 @@
         }
       },
       "indexes": []
+    },
+    "Vehicle": {
+      "tableName": "Vehicle",
+      "schema": {
+        "idVehicle": {
+          "defaultValue": {
+            "internal": true,
+            "value": "Sequelize.UUIDV4"
+          },
+          "primaryKey": true,
+          "field": "idvehicle",
+          "seqType": "Sequelize.UUID"
+        },
+        "idUser": {
+          "field": "iduser",
+          "allowNull": true,
+          "references": {
+            "model": "User",
+            "key": "iduser"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "name": {
+          "field": "name",
+          "seqType": "Sequelize.STRING"
+        },
+        "number": {
+          "field": "number",
+          "seqType": "Sequelize.STRING"
+        },
+        "type": {
+          "field": "type",
+          "seqType": "Sequelize.STRING"
+        },
+        "isActivated": {
+          "field": "isactivated",
+          "defaultValue": {
+            "value": true
+          },
+          "seqType": "Sequelize.BOOLEAN"
+        }
+      },
+      "indexes": []
     }
   },
   "path": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current.json",
   "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current_bak.json",
-  "exists": true,
-  "revision": 4
+  "exists": false,
+  "revision": 1
 }
