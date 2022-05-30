@@ -6,5 +6,6 @@ userRouter.post("/", userController.create);
 userRouter.post("/check-phone", userController.checkDuplicatePhoneNumber);
 userRouter.get("/", userController.getAllUser);
 userRouter.get("/:idUser", [verifyToken], userController.getById);
+userRouter.patch("/:idUser", userController.update);
 
 module.exports = userRouter;

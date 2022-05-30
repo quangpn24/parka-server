@@ -12,21 +12,21 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: "idparkingreservation",
       },
+      idUser: {
+        type: Sequelize.UUID,
+        field: "iduser",
+      },
       entryTime: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
         field: "entrytime",
       },
       exitTime: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
         field: "exittime",
       },
       cost: {
         type: Sequelize.BIGINT,
         field: "cost",
-      },
-      penalty: {
-        type: Sequelize.BIGINT,
-        field: "penalty",
       },
       total: {
         type: Sequelize.BIGINT,
@@ -42,9 +42,9 @@ module.exports = (sequelize, Sequelize) => {
 
       timestamps: false,
 
-      createdAt: false,
+      createdAt: true,
 
-      updatedAt: false,
+      updatedAt: true,
     },
   );
   ParkingSlip.associate = models => {

@@ -14,15 +14,15 @@ module.exports = (sequelize, Sequelize) => {
       },
       idUser: {
         type: Sequelize.UUID,
-        field: "idUser",
+        field: "iduser",
       },
       idParkingSlot: {
         type: Sequelize.UUID,
         field: "idparkingslot",
       },
       startTime: {
-        type: Sequelize.DATE,
-        field: "startTime",
+        type: Sequelize.TIME,
+        field: "starttime",
       },
       bookingDate: {
         type: Sequelize.DATE,
@@ -38,20 +38,23 @@ module.exports = (sequelize, Sequelize) => {
 
       timestamps: false,
 
-      createdAt: false,
+      createdAt: true,
 
-      updatedAt: false,
+      updatedAt: true,
     },
   );
   ParkingReservation.associate = models => {
-    ParkingReservation.hasMany(models.ParkingSlip, {
-      foreignKey: "idParkingReservation",
-    });
-    // ParkingReservation.belongsTo(models.Vehicle, {
-    //   foreignKey: "idVehicle",
-    // });
     ParkingReservation.belongsTo(models.ParkingSlot, {
       foreignKey: "idParkingSlot",
+    });
+    ParkingReservation.belongsTo(models.Vehicle, {
+      foreignKey: "idVehicle",
+    });
+    ParkingReservation.belongsTo(models.User, {
+      foreignKey: "idUser",
+    });
+    ParkingReservation.hasOne(models.ParkingSlip, {
+      foreignKey: "idParkingReservation",
     });
   };
   return ParkingReservation;

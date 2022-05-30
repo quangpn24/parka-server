@@ -16,6 +16,12 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: "displayname",
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+        field: "imageurl",
+        defaultValue:
+          "https://ui-avatars.com/api/?background=random&color=random&font-size=0.33&name=user",
+      },
       password: {
         type: Sequelize.STRING,
         field: "password",
@@ -49,6 +55,12 @@ module.exports = (sequelize, Sequelize) => {
   );
   User.associate = models => {
     User.hasOne(models.RefreshToken, {
+      foreignKey: "idUser",
+    });
+    User.hasMany(models.Vehicle, {
+      foreignKey: "idUser",
+    });
+    User.hasMany(models.ParkingReservation, {
       foreignKey: "idUser",
     });
   };
