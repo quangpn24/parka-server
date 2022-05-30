@@ -3,7 +3,6 @@ const { hashPassword } = require("../../utils/hashPassword");
 
 const checkDuplicatePhoneNumber = async (req, res) => {
   try {
-    console.log(req.body.phoneNumber);
     const user = await User.findOne({
       where: {
         phoneNumber: req.body.phoneNumber,
