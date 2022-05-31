@@ -1,4 +1,4 @@
-const { Block } = require("../../models");
+const { Block, ParkingSlot } = require("../../models");
 
 const create = async (req, res) => {
   try {
@@ -12,17 +12,36 @@ const create = async (req, res) => {
     }
 
     // Create a Block
-    const block = {
-      blockCode: req.body.blockCode,
-      description: req.body.description,
-      idParkingLot: req.body.idParkingLot,
-    };
+    const blocks = req.body.map(e => {
+      return {
+        blockCode: e.blockCode,
+        idParkingLot: e.idParkingLot,
+        numOfSlot: e.numOfSlot,
+      };
+    });
 
     // Save
-    const newBlock = await Block.create(block);
+    const newBlocks = await Block.bulkCreate(blocks, { returning: true });
+
+    for (let index = 0; index < newBlocks.length; index++) {
+      const block = {
+        ...newBlocks[index].dataValues,
+        ...req.body[index],
+      };
+      var listSlots = [];
+      for (let i = block.from; i <= block.to; i++) {
+        const slot = {
+          idBlock: block.idBlock,
+          slotNumber: i,
+        };
+        listSlots.push(slot);
+      }
+      const newSlots = await ParkingSlot.bulkCreate(listSlots, { returning: true });
+    }
+
     res.status(200).send({
-      message: "Successfully",
-      data: newBlock,
+      message: "Add block and slot successfully!",
+      data: newBlocks,
     });
   } catch (error) {
     res.status(400).send({
@@ -33,12 +52,16 @@ const create = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+const getAllByIdParking = async (req, res) => {
   try {
-    const Blocks = await Block.findAll();
+    const { idParkingLot } = req.query;
+    const blocks = await Block.findAll({
+      where: { idParkingLot },
+      include: [{ model: ParkingSlot }],
+    });
     res.status(200).send({
       message: "Successfully",
-      data: Blocks,
+      data: blocks,
     });
   } catch (error) {
     res.status(400).send({
@@ -66,4 +89,19 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { create, getAll, getById };
+const update = async (req, res) => {
+  try {
+    const { idParkingLot } = req.query;
+    const isDeleted = await Block.destroy({ where: { idParkingLot } });
+    if (isDeleted) {
+      create(req, res);
+    }
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+  }
+};
+
+module.exports = { create, getAllByIdParking, getById, update };
