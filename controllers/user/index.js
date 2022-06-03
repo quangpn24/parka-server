@@ -5,6 +5,7 @@ const parkingSlipController = require("./parkingSlip.controller");
 const parkingLotController = require("./parkingLot.controller");
 const timeFrameController = require("./timeFrame.controller");
 const parkingSlotController = require("./parkingSlot.controller");
+const blockController = require("./block.controller");
 
 module.exports = {
   userController,
@@ -14,4 +15,5 @@ module.exports = {
   parkingLotController,
   parkingSlotController,
   timeFrameController,
+  blockController,
 };
