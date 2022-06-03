@@ -53,7 +53,6 @@ const getAllUser = async (req, res) => {
     const users = await User.findAll();
     res.status(200).send(users);
   } catch (error) {
-    console.log(1);
     res.status(500).send(error);
   }
 };

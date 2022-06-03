@@ -5,7 +5,6 @@ const Op = Sequelize.Op;
 const searchAdress = async (req, res) => {
   try {
     const { searchText } = req.body;
-    console.log(req.body);
     // console.log(searchText);
     const parkingLots = await ParkingLot.findAll({
       limit: 10,
