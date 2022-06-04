@@ -43,7 +43,7 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { idParkingLot } = req.query;
+    const { idParkingLot } = req.params;
     const isDeleted = await TimeFrame.destroy({ where: { idParkingLot } });
     if (isDeleted) {
       create(req, res);
