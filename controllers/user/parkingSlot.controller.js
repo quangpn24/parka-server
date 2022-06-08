@@ -54,4 +54,26 @@ const numOfSlotOfParkingLot = async (req, res) => {
   }
 };
 
-module.exports = { numOfSlotIsUse, numOfSlotOfParkingLot };
+const getSlots = async (req, res) => {
+  try {
+    const { idParkingLot } = req.params;
+    const blocks = await Block.findAll({ where: { idParkingLot: idParkingLot } });
+    const idBlockArr = blocks.map(block => block.idBlock);
+    const slots = await ParkingSlot.findAll({
+      where: {
+        idBlock: idBlockArr,
+      },
+    });
+    res.send({
+      message: "Successful",
+      data: { blocks: blocks, slots: slots },
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error || "error",
+      data: "",
+    });
+  }
+};
+
+module.exports = { numOfSlotIsUse, numOfSlotOfParkingLot, getSlots };

@@ -1,4 +1,11 @@
-const { ParkingReservation } = require("../../models");
+const {
+  ParkingReservation,
+  ParkingLot,
+  ParkingSlot,
+  Block,
+  Vehicle,
+  TimeFrame,
+} = require("../../models");
 
 const create = async (req, res) => {
   try {
@@ -14,10 +21,13 @@ const create = async (req, res) => {
 
     const parkingReservation = {
       idVehicle: body.idVehicle,
+      idUser: body.idUser,
       idParkingSlot: body.idParkingSlot,
+      idTimeFrame: body.idTimeFrame,
       startTime: body.startTime,
+      endTime: body.endTime,
       bookingDate: body.bookingDate,
-      duration: body.duration,
+      total: body.total,
     };
 
     const newReservation = await ParkingReservation.create(parkingReservation);
@@ -58,6 +68,11 @@ const getByIdUser = async (req, res) => {
       where: {
         idUser: idUser,
       },
+      include: [
+        { model: ParkingSlot, include: { model: Block, include: { model: ParkingLot } } },
+        { model: Vehicle },
+        { model: TimeFrame },
+      ],
     });
 
     res.status(200).send({
@@ -95,4 +110,20 @@ const update = async (req, res) => {
   }
 };
 
-module.exports = { create, getByIdUser, getById, update };
+const getAll = async (req, res) => {
+  try {
+    const reservations = await ParkingReservation.findAll();
+    res.status(200).send({
+      message: "Successfully",
+      data: reservations,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+
+module.exports = { create, getByIdUser, getById, update, getAll };
