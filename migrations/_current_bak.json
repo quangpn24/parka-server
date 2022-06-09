@@ -212,9 +212,6 @@
           "seqType": "Sequelize.BIGINT"
         },
         "status": {
-          "defaultValue": {
-            "value": "scheduled"
-          },
           "field": "status",
           "seqType": "Sequelize.ENUM('scheduled', 'in time', 'ongoing', 'end')"
         }
@@ -472,5 +469,5 @@
   "path": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current.json",
   "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current_bak.json",
   "exists": true,
-  "revision": 6
+  "revision": 5
 }

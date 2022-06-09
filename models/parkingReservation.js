@@ -20,17 +20,30 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: "idparkingslot",
       },
+      idTimeFrame: {
+        type: Sequelize.UUID,
+        field: "idtimeframe",
+      },
       startTime: {
         type: Sequelize.TIME,
         field: "starttime",
+      },
+      endTime: {
+        type: Sequelize.TIME,
+        field: "endtime",
       },
       bookingDate: {
         type: Sequelize.DATE,
         field: "bookingdate",
       },
-      duration: {
-        type: Sequelize.INTEGER,
-        field: "duration",
+      total: {
+        type: Sequelize.BIGINT,
+        field: "total",
+      },
+      status: {
+        type: Sequelize.ENUM("scheduled", "in time", "ongoing", "end"),
+        defaultValue: "scheduled",
+        field: "status",
       },
     },
     {
@@ -52,6 +65,9 @@ module.exports = (sequelize, Sequelize) => {
     });
     ParkingReservation.belongsTo(models.User, {
       foreignKey: "idUser",
+    });
+    ParkingReservation.belongsTo(models.TimeFrame, {
+      foreignKey: "idTimeFrame",
     });
     ParkingReservation.hasOne(models.ParkingSlip, {
       foreignKey: "idParkingReservation",

@@ -7,6 +7,7 @@ const parkingSlipRouter = require("./parkingSlip.routes");
 const parkingLotRouter = require("./parkingLot.routes");
 const timeFrameRouter = require("./timeFrame.routes");
 const parkingSlotRouter = require("./parkingSlot.routes");
+const blockRouter = require("./block.routes");
 
 const userRoute = express();
 
@@ -17,6 +18,7 @@ userRoute.use("/reservations", parkingReservationRouter);
 userRoute.use("/slips", parkingSlipRouter);
 userRoute.use("/lots", parkingLotRouter);
 userRoute.use("/time", timeFrameRouter);
-userRoute.use("/slot", parkingSlotRouter);
+userRoute.use("/slots", parkingSlotRouter);
+userRoute.use("/blocks", blockRouter);
 
 module.exports = userRoute;

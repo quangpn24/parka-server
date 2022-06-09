@@ -32,6 +32,9 @@ module.exports = (sequelize, Sequelize) => {
     },
   );
   TimeFrame.associate = models => {
+    TimeFrame.hasMany(models.ParkingReservation, {
+      foreignKey: "idTimeFrame",
+    });
     // TimeFrame.hasOne(models.RefreshToken, {
     // 	foreignKey: 'idTimeFrame',
     // });

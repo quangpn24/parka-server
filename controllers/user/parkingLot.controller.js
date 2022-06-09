@@ -1,4 +1,4 @@
-const { ParkingLot } = require("../../models");
+const { ParkingLot, TimeFrame } = require("../../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -44,4 +44,25 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { searchAdress, getAll };
+const getById = async (req, res) => {
+  try {
+    const { idParkingLot } = req.params;
+    console.log(idParkingLot);
+    const parkingLot = await ParkingLot.findAll({
+      where: { idParkingLot },
+      include: [{ model: TimeFrame }],
+    });
+    res.status(200).send({
+      message: "Successfully",
+      data: parkingLot,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
+
+module.exports = { searchAdress, getAll, getById };

@@ -91,10 +91,15 @@ const getById = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { idParkingLot } = req.query;
+    const { idParkingLot } = req.params;
     const isDeleted = await Block.destroy({ where: { idParkingLot } });
     if (isDeleted) {
       create(req, res);
+    } else {
+      return res.send({
+        message: "Failed",
+        data: "",
+      });
     }
   } catch (error) {
     res.status(400).send({
