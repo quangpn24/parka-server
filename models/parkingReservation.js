@@ -41,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
         field: "total",
       },
       status: {
-        type: Sequelize.ENUM("scheduled", "in time", "ongoing", "end"),
+        type: Sequelize.ENUM("scheduled", "ongoing", "end"),
         defaultValue: "scheduled",
         field: "status",
       },
