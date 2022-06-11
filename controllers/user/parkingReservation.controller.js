@@ -70,7 +70,8 @@ const getByIdUser = async (req, res) => {
     if (status == "end") {
       reservations = await ParkingReservation.findAll({
         where: {
-          [Op.and]: [{ idUser: idUser }, { status: "end" }],
+          idUser: idUser,
+          [Op.or]: [{ status: "end" }, { status: "cancel" }],
         },
         include: [
           { model: ParkingSlot, include: { model: Block, include: { model: ParkingLot } } },
@@ -106,7 +107,31 @@ const getByIdUser = async (req, res) => {
     return;
   }
 };
-
+const cancel = async (req, res) => {
+  try {
+    const { listId } = req.body;
+    const result = await ParkingReservation.update(
+      { status: "cancel" },
+      {
+        where: {
+          idParkingReservation: { [Op.in]: listId },
+        },
+        returning: true,
+      },
+    );
+    res.status(200).send({
+      message: "Successfully",
+      data: result[1],
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      message: error,
+      data: "",
+    });
+    return;
+  }
+};
 const update = async (req, res) => {
   try {
     const { idParkingReservation } = req.params;
@@ -145,4 +170,4 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { create, getByIdUser, getById, update, getAll };
+module.exports = { create, getByIdUser, getById, update, getAll, cancel };
