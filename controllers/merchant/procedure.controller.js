@@ -4,10 +4,9 @@ const checkIn = async (req, res) => {
   try {
     const { idParkingReservation } = req.body;
     const parkingReservation = await ParkingReservation.findByPk(idParkingReservation);
-
     if (!parkingReservation) {
       return res.send({
-        message: "Check in fail!",
+        message: "You have not booked in advance",
         data: {
           status: false,
         },
@@ -18,6 +17,7 @@ const checkIn = async (req, res) => {
       idParkingReservation,
       idUser: parkingReservation.idUser,
       entryTime: parkingReservation.startTime,
+      isPaid: false,
     };
     const parkingSlip = await ParkingSlip.create(newParkingSlip);
     //update status
@@ -63,8 +63,7 @@ const checkOut = async (req, res) => {
     //update status
     const updatedParkingSlip = {
       exitTime: req.body.exitTime,
-      cost: req.body.cost,
-      total: req.body.cost,
+      total: req.body.total,
       isPaid: req.body.isPaid,
     };
     const resultUpdateParkingSlip = await ParkingSlip.update(updatedParkingSlip, {
