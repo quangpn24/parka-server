@@ -1,27 +1,52 @@
 const sequelize = require("sequelize");
+const Op = sequelize.Op;
 const { Block, ParkingReservation, ParkingSlot, ParkingLot, TimeFrame } = require("../../models");
 
-const numOfSlotIsUse = async (req, res) => {
+const getAvailableSlots = async (req, res) => {
   try {
-    const { idParkingLot } = req.body;
-    const num = await ParkingReservation.count({
+    const { idParkingLot } = req.params;
+    const { start, end, date } = req.query;
+    const slotUsed = await ParkingSlot.findAll({
+      attributes: ["idParkingSlot"],
       include: [
         {
-          model: ParkingSlot,
-          include: [
-            {
-              model: Block,
-              where: {
-                idParkingLot: idParkingLot,
-              },
-            },
-          ],
+          model: Block,
+          where: {
+            idParkingLot: idParkingLot,
+          },
+        },
+        {
+          model: ParkingReservation,
+          where: {
+            [Op.or]: [
+              { startTime: { [Op.lte]: start }, endTime: { [Op.gte]: start } },
+              { [Op.and]: [{ startTime: { [Op.gte]: start } }, { startTime: { [Op.lte]: end } }] },
+            ],
+            bookingDate: new Date(date),
+          },
         },
       ],
     });
+
+    const idParkingSlotUsed = slotUsed.map(e => e.idParkingSlot);
+
+    const availableSlots = await Block.findAll({
+      where: {
+        idParkingLot: idParkingLot,
+      },
+      include: [
+        {
+          model: ParkingSlot,
+          where: {
+            idParkingSlot: { [Op.notIn]: idParkingSlotUsed },
+          },
+        },
+      ],
+    });
+
     return res.send({
-      message: "num of slot ",
-      data: { num },
+      message: "slots used",
+      data: availableSlots,
     });
   } catch (error) {
     res.status(500).send({
@@ -33,9 +58,9 @@ const numOfSlotIsUse = async (req, res) => {
 
 const numOfSlotOfParkingLot = async (req, res) => {
   try {
-    const { idParkingLot } = req.body;
-    const num = await TimeFrame.findAll({
-      attributes: [[sequelize.fn("sum", sequelize.col("numOfSlot")), "total"]],
+    const { idParkingLot } = req.params;
+    const num = await Block.findAll({
+      attributes: [[sequelize.fn("sum", sequelize.col("numofslot")), "total"]],
       raw: true,
       where: {
         idParkingLot: idParkingLot,
@@ -76,4 +101,4 @@ const getSlots = async (req, res) => {
   }
 };
 
-module.exports = { numOfSlotIsUse, numOfSlotOfParkingLot, getSlots };
+module.exports = { getAvailableSlots, numOfSlotOfParkingLot, getSlots };

@@ -24,10 +24,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TIME,
         field: "exittime",
       },
-      cost: {
-        type: Sequelize.BIGINT,
-        field: "cost",
-      },
       total: {
         type: Sequelize.BIGINT,
         field: "total",
