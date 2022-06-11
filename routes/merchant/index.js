@@ -16,7 +16,7 @@ merchantRouter.use("/slots", parkingSlotRouter);
 merchantRouter.use("/auth", authRouter);
 merchantRouter.use("/time", timeFrameRouter);
 merchantRouter.use("/procedure", procedureRouter);
-merchantRouter.use("/reservation", parkingReservationRouter);
+merchantRouter.use("/reservations", parkingReservationRouter);
 merchantRouter.use("/parking-slip", parkingSlipRouter);
 
 module.exports = merchantRouter;
