@@ -86,6 +86,43 @@
       },
       "indexes": []
     },
+    "Favorite": {
+      "tableName": "Favorite",
+      "schema": {
+        "idFavorite": {
+          "defaultValue": {
+            "internal": true,
+            "value": "Sequelize.UUIDV4"
+          },
+          "primaryKey": true,
+          "field": "idfavorite",
+          "seqType": "Sequelize.UUID"
+        },
+        "idUser": {
+          "field": "iduser",
+          "unique": "Favorite_idUser_idParkingLot_unique",
+          "references": {
+            "model": "User",
+            "key": "iduser"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        },
+        "idParkingLot": {
+          "field": "idparkinglot",
+          "unique": "Favorite_idUser_idParkingLot_unique",
+          "references": {
+            "model": "ParkingLot",
+            "key": "idparkinglot"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "seqType": "Sequelize.UUID"
+        }
+      },
+      "indexes": []
+    },
     "ParkingLot": {
       "tableName": "ParkingLot",
       "schema": {
@@ -212,8 +249,11 @@
           "seqType": "Sequelize.BIGINT"
         },
         "status": {
+          "defaultValue": {
+            "value": "scheduled"
+          },
           "field": "status",
-          "seqType": "Sequelize.ENUM('scheduled', 'in time', 'ongoing', 'end')"
+          "seqType": "Sequelize.ENUM('scheduled', 'ongoing', 'end')"
         }
       },
       "indexes": []
@@ -469,5 +509,5 @@
   "path": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current.json",
   "backupPath": "C:\\Users\\huynh\\Documents\\GitHub\\parka-server\\migrations\\_current_bak.json",
   "exists": true,
-  "revision": 5
+  "revision": 8
 }
