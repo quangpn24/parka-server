@@ -63,6 +63,10 @@ module.exports = (sequelize, Sequelize) => {
     User.hasMany(models.ParkingReservation, {
       foreignKey: "idUser",
     });
+    User.belongsToMany(models.ParkingLot, {
+      through: models.Favorite,
+      foreignKey: "idUser",
+    });
   };
   return User;
 };

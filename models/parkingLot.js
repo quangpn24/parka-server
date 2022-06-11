@@ -55,6 +55,10 @@ module.exports = (sequelize, Sequelize) => {
     ParkingLot.belongsTo(models.Company, {
       foreignKey: "idCompany",
     });
+    ParkingLot.belongsToMany(models.User, {
+      through: models.Favorite,
+      foreignKey: "idParkingLot",
+    });
   };
   return ParkingLot;
 };
