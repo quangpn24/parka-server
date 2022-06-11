@@ -5,8 +5,9 @@ const {
   Block,
   Vehicle,
   TimeFrame,
+  ParkingSlip,
 } = require("../../models");
-
+const { Op } = require("sequelize");
 const create = async (req, res) => {
   try {
     const { body } = req;
@@ -64,16 +65,34 @@ const getById = async (req, res) => {
 const getByIdUser = async (req, res) => {
   try {
     const { idUser } = req.params;
-    const reservations = await ParkingReservation.findAll({
-      where: {
-        idUser: idUser,
-      },
-      include: [
-        { model: ParkingSlot, include: { model: Block, include: { model: ParkingLot } } },
-        { model: Vehicle },
-        { model: TimeFrame },
-      ],
-    });
+    const { status } = req.query;
+    var reservations;
+    if (status == "end") {
+      reservations = await ParkingReservation.findAll({
+        where: {
+          [Op.and]: [{ idUser: idUser }, { status: "end" }],
+        },
+        include: [
+          { model: ParkingSlot, include: { model: Block, include: { model: ParkingLot } } },
+          { model: Vehicle },
+          { model: TimeFrame },
+          { model: ParkingSlip },
+        ],
+      });
+    }
+    if (status == "scheduled") {
+      reservations = await ParkingReservation.findAll({
+        where: {
+          idUser: idUser,
+          [Op.or]: [{ status: "scheduled" }, { status: "ongoing" }],
+        },
+        include: [
+          { model: ParkingSlot, include: { model: Block, include: { model: ParkingLot } } },
+          { model: Vehicle },
+          { model: TimeFrame },
+        ],
+      });
+    }
 
     res.status(200).send({
       message: "Successfully",
