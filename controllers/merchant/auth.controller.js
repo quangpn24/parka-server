@@ -51,11 +51,13 @@ const login = async (req, res) => {
       res.status(404).json({
         message: "Company not found",
       });
+      return;
     }
 
     const validPassword = bcrypt.compareSync(req.body.password, company.password);
     if (!validPassword) {
-      res.send({ message: "Invalid password" });
+      res.status(404).send({ message: "Invalid password" });
+      return;
     }
 
     const accessToken = jwt.sign(
@@ -102,4 +104,62 @@ const verify = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
-module.exports = { signUp, login, verify };
+
+const changePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+    const { idCompany } = req.params;
+    const company = await Company.findByPk(idCompany);
+
+    const isValidPassword = bcrypt.compareSync(password, company.password);
+    console.log({ isValidPassword });
+    if (!isValidPassword) {
+      res.status(400).json({
+        message: "Password not match",
+        data: "",
+      });
+      return;
+    }
+    const result = await Company.update(
+      { password: bcrypt.hashSync(newPassword) },
+      {
+        where: {
+          idCompany: idCompany,
+        },
+        returning: true,
+      },
+    );
+    const updatedCompany = result[1][0];
+    updatedCompany.password = undefined;
+    res.status(200).json({
+      message: "Successfully",
+      data: updatedCompany,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err, data: "" });
+  }
+};
+
+const updateCompany = async (req, res) => {
+  try {
+    const { idCompany } = req.params;
+    const result = await Company.update(req.body, {
+      where: {
+        idCompany: idCompany,
+      },
+      returning: true,
+    });
+
+    const updatedCompany = result[1][0];
+    updatedCompany.password = undefined;
+
+    res.status(200).send({
+      message: "Successfully",
+      data: updatedCompany,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err, data: "" });
+  }
+};
+
+module.exports = { signUp, login, verify, changePassword, updateCompany };

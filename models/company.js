@@ -27,6 +27,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: "password",
       },
+      // logo: {
+      //   type: Sequelize.STRING,
+      //   field: "logo",
+      // },
       isActivated: {
         type: Sequelize.BOOLEAN,
         field: "isactivated",
